@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Guide</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #aaa;
+      margin-bottom: 18px;
+    }
+
+    /* GRID */
+    .exhibit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    /* CARD */
+    .card {
+      background: #1a1a1a;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.active {
+      border-color: #c89a4b;
+    }
+
+    /* IMAGE */
+    .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+
+    /* TITLE UNDER IMAGE */
+    .card-title {
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: #1a1a1a;
+    }
+
+    /* SECTIONS */
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-label {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    /* OPTIONS */
+    .option {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .option.active {
+      border-color: #c89a4b;
+      background: rgba(200,154,75,0.18);
+    }
+
+    /* BUTTON */
+    .button {
+      margin-top: 22px;
+      width: 100%;
+      padding: 16px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      background: #c89a4b;
+      color: black;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Audio Guide</h1>
+    <div class="subtitle">Wähle ein Exponat</div>
+
+    <!-- EXHIBITS -->
+    <div class="exhibit-grid">
+
+      <div class="card active" data-exhibit="plateosaurus">
+        <img src="plateosaurus.png">
+        <div class="card-title">Plateosaurus</div>
+      </div>
+
+      <div class="card" data-exhibit="ichthyosaurus">
+        <img src="ichthyosaurus.png">
+        <div class="card-title">Ichthyosaurus</div>
+      </div>
+
+    </div>
+
+    <!-- MODE -->
+    <div class="section">
+      <div class="section-label">Modus</div>
+
+      <div class="option active" data-mode="adult">Erwachsene</div>
+      <div class="option" data-mode="child">Kind</div>
+      <div class="option" data-mode="researcher">Forschende</div>
+    </div>
+
+    <!-- LANGUAGE -->
+    <div class="section">
+      <div class="section-label">Sprache</div>
+
+      <div class="option active" data-lang="de">Deutsch</div>
+      <div class="option" data-lang="en">English</div>
+    </div>
+
+    <button class="button" id="start">Start</button>
+  </div>
+
+  <script>
+    let selectedExhibit = "plateosaurus";
+    let selectedMode = "adult";
+    let selectedLang = "de";
+
+    // EXHIBIT
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        selectedExhibit = card.dataset.exhibit;
+      });
+    });
+
+    // MODE
+    document.querySelectorAll("[data-mode]").forEach(opt => {
+      opt.addEventListener("click", () => {
+        document.querySelectorAll("[data-mode]").forEach(o => o.classList.remove("active"));
+        opt.classList.add("active");
+        selectedMode = opt.dataset.mode;
+      });
+    });
+
+    // LANGUAGE
+    document.querySelectorAll("[data-lang]").forEach(opt => {
+      opt.addEventListener("click", () => {
+        document.querySelectorAll("[data-lang]").forEach(o => o.classList.remove("active"));
+        opt.classList.add("active");
+        selectedLang = opt.dataset.lang;
+      });
+    });
+
+    // START
+document.getElementById("start").addEventListener("click", () => {
+  const url = `guide.html?exhibit=${selectedExhibit}&mode=${selectedMode}&lang=${selectedLang}`;
+  window.location.href = url;
+});
+  </script>
+</body>
+</html>

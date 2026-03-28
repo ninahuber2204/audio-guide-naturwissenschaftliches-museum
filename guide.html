@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guide</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111;
+      color: white;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .back {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid #333;
+      background: #171717;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .topbar-title {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    .hero-card {
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+    }
+
+  .hero-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #eee;
+}
+
+.hero-card img.plateosaurus-image {
+  object-position: center top;
+}
+
+.hero-content {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.08;
+  margin: 0 0 12px 0;
+  text-align: left;
+}
+
+
+.description {
+  color: #b6b6b6;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 0.97rem;
+  text-align: left;
+}
+
+    .controls {
+      margin-top: 18px;
+    }
+
+    .start-btn {
+      width: 100%;
+      padding: 18px 20px;
+      border: none;
+      border-radius: 999px;
+      background: #c89a4b;
+      color: black;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(200,154,75,0.16);
+    }
+
+    .status-card {
+      margin-top: 16px;
+      border-radius: 18px;
+      border: 1px solid #2f2f2f;
+      background: #171717;
+      padding: 16px;
+      min-height: 70px;
+    }
+
+    .status-label {
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    #status {
+      color: #ddd;
+      line-height: 1.45;
+      font-size: 0.98rem;
+      word-break: break-word;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <button class="back" onclick="window.location.href='index.html'">←</button>
+      <div class="topbar-title">Audio Guide</div>
+    </div>
+
+    <div class="hero-card">
+      <img id="heroImage" src="" alt="">
+     <div class="hero-content">
+  <h1 class="title" id="title">Guide</h1>
+
+  <div class="description" id="description">
+    Explore this exhibit through a spoken conversation.
+  </div>
+</div>
+    </div>
+
+    <div class="controls">
+      <button class="start-btn" id="start">🎤 Start guide</button>
+    </div>
+
+    <div class="status-card">
+      <div class="status-label">Status</div>
+      <div id="status">Ready.</div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const exhibit = params.get("exhibit") || "plateosaurus";
+    const mode = params.get("mode") || "adult";
+    const lang = params.get("lang") || "de";
+
+const exhibitConfig = {
+  plateosaurus: {
+    title: "Plateosaurus",
+    image: "plateosaurus.png",
+    imageClass: "plateosaurus-image",
+    description: {
+      de: "Stell eine Frage und entdecke den Plateosaurus im Gespräch.",
+      en: "Ask a question and explore the Plateosaurus through conversation."
+    }
+  },
+  ichthyosaurus: {
+    title: "Ichthyosaurus",
+    image: "ichthyosaurus.png",
+    imageClass: "",
+    description: {
+      de: "Stell eine Frage und entdecke dieses Meerestier im Gespräch.",
+      en: "Ask a question and explore this marine reptile through conversation."
+    }
+  }
+};
+    const config = exhibitConfig[exhibit] || exhibitConfig.plateosaurus;
+
+    document.getElementById("title").textContent = config.title;
+    document.getElementById("heroImage").src = config.image;
+    document.getElementById("heroImage").className = config.imageClass || "";
+    document.getElementById("heroImage").alt = config.title;
+    document.getElementById("description").textContent =
+      config.description[lang] || config.description.de;
+
+    const startButton = document.getElementById("start");
+    const statusText = document.getElementById("status");
+
+if (lang === "de") {
+  startButton.textContent = "🎤 Stell eine Frage";
+  statusText.textContent = "Bereit.";
+  document.querySelector(".status-label").textContent = "Status";
+  document.querySelector(".topbar-title").textContent = "Audio Guide";
+} else {
+  startButton.textContent = "🎤 Ask a question";
+  statusText.textContent = "Ready.";
+  document.querySelector(".status-label").textContent = "Status";
+  document.querySelector(".topbar-title").textContent = "Audio Guide";
+}
+
+    let pc;
+    let audioElement;
+
+    startButton.addEventListener("click", async () => {
+      try {
+        statusText.textContent = lang === "de"
+          ? "Session wird erstellt..."
+          : "Creating session...";
+
+        const tokenResponse = await fetch(
+          `http://localhost:3000/session?exhibit=${exhibit}&mode=${mode}&lang=${lang}`
+        );
+
+        const data = await tokenResponse.json();
+        console.log("SESSION DATA:", data);
+
+        if (!data.client_secret) {
+          statusText.textContent =
+            "Server response: " + JSON.stringify(data);
+          return;
+        }
+
+        const EPHEMERAL_KEY = data.client_secret.value;
+
+        statusText.textContent = lang === "de"
+          ? "Mikrofon wird aktiviert..."
+          : "Activating microphone...";
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        pc = new RTCPeerConnection();
+
+        audioElement = document.createElement("audio");
+        audioElement.autoplay = true;
+        document.querySelector(".status-card").appendChild(audioElement);
+
+        pc.ontrack = (event) => {
+          audioElement.srcObject = event.streams[0];
+        };
+
+        stream.getTracks().forEach(track => {
+          pc.addTrack(track, stream);
+        });
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+
+        statusText.textContent = lang === "de"
+          ? "Verbindung wird aufgebaut..."
+          : "Connecting...";
+
+        const baseUrl = "https://api.openai.com/v1/realtime";
+        const model = "gpt-realtime";
+
+        const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
+          method: "POST",
+          body: offer.sdp,
+          headers: {
+            Authorization: `Bearer ${EPHEMERAL_KEY}`,
+            "Content-Type": "application/sdp"
+          },
+        });
+
+        const answer = {
+          type: "answer",
+          sdp: await sdpResponse.text(),
+        };
+
+        await pc.setRemoteDescription(answer);
+
+        statusText.textContent = lang === "de"
+          ? "Verbunden – sprich jetzt."
+          : "Connected – speak now.";
+
+      } catch (error) {
+        console.error(error);
+        statusText.textContent = "Error: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

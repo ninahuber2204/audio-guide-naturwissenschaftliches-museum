@@ -225,8 +225,8 @@ if (lang === "de") {
           : "Creating session...";
 
         const tokenResponse = await fetch(
-          `http://localhost:3000/session?exhibit=${exhibit}&mode=${mode}&lang=${lang}`
-        );
+  `https://audio-guide-api-dds9.onrender.com/session?exhibit=${exhibit}&mode=${mode}&lang=${lang}`
+);
 
         const data = await tokenResponse.json();
         console.log("SESSION DATA:", data);

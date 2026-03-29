@@ -165,6 +165,7 @@
   </div>
 
   <script>
+  let lastUserMessage = "";
     const params = new URLSearchParams(window.location.search);
 
     const exhibit = params.get("exhibit") || "plateosaurus";
@@ -254,6 +255,23 @@ if (lang === "de") {
         pc.ontrack = (event) => {
           audioElement.srcObject = event.streams[0];
         };
+        audioElement.onloadedmetadata = async () => {
+  const logData = {
+    timestamp: new Date().toISOString(),
+    exhibit,
+    mode,
+    lang,
+    note: "audio response received"
+  };
+
+  await fetch("https://audio-guide-api-dds9.onrender.com/log", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(logData)
+  });
+};
 
         stream.getTracks().forEach(track => {
           pc.addTrack(track, stream);

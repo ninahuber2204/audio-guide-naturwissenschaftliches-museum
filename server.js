@@ -1,3 +1,4 @@
+import fs from "fs";
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
@@ -476,4 +477,24 @@ res.json(data);
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");
+});
+app.use(express.json());
+
+app.post("/log", (req, res) => {
+  const logEntry = req.body;
+
+  let logs = [];
+
+  try {
+    const data = fs.readFileSync("logs.json", "utf-8");
+    logs = JSON.parse(data);
+  } catch (err) {
+    logs = [];
+  }
+
+  logs.push(logEntry);
+
+  fs.writeFileSync("logs.json", JSON.stringify(logs, null, 2));
+
+  res.json({ status: "saved" });
 });

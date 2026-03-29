@@ -278,9 +278,26 @@ dc.onmessage = (event) => {
   }
 
   // KI-Antwort als Transkript
-  if (msg.type === "response.audio_transcript.done") {
-    lastAssistantTranscript = msg.transcript || "";
-  }
+if (msg.type === "response.audio_transcript.done") {
+  lastAssistantTranscript = msg.transcript || "";
+
+  const logData = {
+    timestamp: new Date().toISOString(),
+    exhibit,
+    mode,
+    lang,
+    userTranscript: lastUserTranscript,
+    assistantTranscript: lastAssistantTranscript
+  };
+
+  fetch("https://audio-guide-api-dds9.onrender.com/log", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(logData)
+  }).catch(err => console.error("Log failed:", err));
+}
 };
 
         audioElement = document.createElement("audio");
@@ -297,30 +314,13 @@ dc.onmessage = (event) => {
   : "Speaking...";
 
 
-audioElement.onended = async () => {
+audioElement.onended = () => {
   startButton.disabled = false;
   startButton.style.opacity = "1";
   statusText.textContent = lang === "de"
     ? "Bereit."
     : "Ready.";
-
-  const logData = {
-    timestamp: new Date().toISOString(),
-    exhibit,
-    mode,
-    lang,
-    userTranscript: lastUserTranscript,
-    assistantTranscript: lastAssistantTranscript
   };
-
-  await fetch("https://audio-guide-api-dds9.onrender.com/log", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(logData)
-  });
-};
 };
 
         stream.getTracks().forEach(track => {

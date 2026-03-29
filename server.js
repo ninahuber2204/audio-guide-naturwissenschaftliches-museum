@@ -498,3 +498,11 @@ app.post("/log", (req, res) => {
 
   res.json({ status: "saved" });
 });
+  app.get("/logs", (req, res) => {
+  try {
+    const data = fs.readFileSync("logs.json", "utf-8");
+    res.type("application/json").send(data);
+  } catch (err) {
+    res.status(404).send("No logs yet");
+  }
+});

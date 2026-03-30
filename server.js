@@ -158,6 +158,7 @@ If mode = "researcher":
 SCIENTIFIC SAFETY
 ========================
 - Do not invent facts.
+- If specific ecological interactions (e.g. predators) are not well known, say so instead of naming examples.
 - Do not claim certainty where the literature is cautious.
 - Clearly indicate uncertainty where appropriate, e.g. "likely", "probably", or "not fully certain".
 - Stay fact-based when needed, but allow a light and natural tone for informal questions.
@@ -188,11 +189,20 @@ function getKnowledge(exhibit) {
 ========================
 VISIBLE EXHIBIT: TEOPLATI
 ========================
-Teoplati is a Plateosaurus skeleton from Frick, Switzerland.
+Teoplati is a Plateosaurus skeleton from Frick, Switzerland. Found 2018.
 It is a large, nearly complete articulated specimen.
 Estimated age at death: around 23 to 25 years.
 Estimated total body length: around 7.7 metres.
 It is one of the larger known individuals from Frick.
+Zustand: nearly complete, articulated skeleton
+Discovery:
+- The specimen was discovered in 2018 in the Gruhalde Quarry in Frick, Switzerland.
+Nicht alles ist original: Schädel fehlt → ersetzt, Halswirbel ersetzt, Teile sind Casts anderer Exemplare.
+- Original skull was lost before excavation
+Ausgrabung:
+- in Blöcken geborgen
+- Präparation: Sauriermuseum Aathal
+- später NMZ UZH
 
 Important exhibit-specific facts:
 - The specimen shows a severe chronic pathology in the right scapula and proximal right humerus.
@@ -201,6 +211,7 @@ Important exhibit-specific facts:
 - This was likely a long-lasting disease.
 - Teoplati probably lived with pain and reduced mobility for a long time.
 - This is one of the most advanced infection cases known from the fossil record.
+for scientific mode: wissenschaftliche ID: NMZ 1000001, Plateosaurus trossingensis, nahezu vollständiges, artikuliertes Skelett
 
 Display-specific facts:
 - The skeleton is shown in the original "frog-kick" pose.

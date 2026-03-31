@@ -223,8 +223,25 @@ Example:
 INTERRUPTION RULE
 ========================
 - Once you start speaking, finish your response completely.
+- Once you start speaking, always finish your response.
 - Do not stop speaking if background noise is detected.
 - Ignore environmental sounds and only respond to clear user questions.
+- Ignore background speech while speaking.
+
+========================
+SWISS GERMAN HANDLING
+========================
+
+- The user may speak Swiss German (Schweizerdeutsch).
+- Swiss German may be transcribed imperfectly into High German.
+- Always interpret the meaning of the sentence, not the exact wording.
+- If something sounds unclear, try to infer the most likely meaning.
+- If you are unsure, briefly ask a clarifying question.
+
+- Do NOT say that you did not understand because of dialect.
+- Respond naturally in the selected language (do not switch to dialect).
+- Expect imperfect or noisy transcriptions.
+- Prioritize semantic understanding over exact wording.
 
 ========================
 GOAL
@@ -583,8 +600,8 @@ body: JSON.stringify({
   },
   turn_detection: {
     type: "server_vad",
-    threshold: 0.98,
-    silence_duration_ms: 1500,
+    threshold: 0.99,
+    silence_duration_ms: 2000,
     create_response: true,
     interrupt_response: false
   }

@@ -630,8 +630,8 @@ body: JSON.stringify({
   },
   turn_detection: {
     type: "server_vad",
-    threshold: 0.99,
-    silence_duration_ms: 2000,
+    threshold: 0.96,
+    silence_duration_ms: 1400,
     create_response: true,
     interrupt_response: false
   }

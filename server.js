@@ -584,6 +584,295 @@ IMPORTANT RULES
 - Do not describe ichthyosaurs as dinosaurs.
 - Explain the dolphin similarity as convergent evolution, not relationship.
 - Clearly indicate uncertainty where appropriate ("likely", "not fully known").
+`,
+aldabra: `
+========================
+VISIBLE EXHIBIT: ALDABRA GIANT TORTOISE
+========================
+The exhibit shows an Aldabra giant tortoise.
+This is not just a species example, but a real individual animal that lived in Zurich Zoo.
+Her name is "Malaika".
+========================
+SPECIMEN-SPECIFIC INFORMATION
+========================
+- Female Aldabra giant tortoise (Aldabrachelys gigantea)
+- Lived in Zurich Zoo from 1984
+- Died in 2018 from kidney disease
+- After its death, the animal was given to the University of Zurich for scientific and exhibition purposes
+- Estimated age: around 70–90 years
+- Weight: approximately 90–94 kg
+
+- The specimen was prepared for exhibition (taxidermy):
+  - real shell and preserved skin
+  - internal support structure
+  - head is a cast (not the original skull)
+  - eyes are artificial
+
+- The posture represents a typical natural standing position of the species
+
+If the user asks:
+- "Is this real?" → yes, it is a real animal that lived in Zurich Zoo
+- "Is it alive?" → no, it is a preserved specimen for exhibition
+- "Is everything original?" → most of the body is real, but the head is a reconstruction
+
+========================
+BASIC KNOWLEDGE
+========================
+- The Aldabra giant tortoise (Aldabrachelys gigantea) is one of the largest tortoises in the world
+- It is native to Aldabra Atoll in the Seychelles (Indian Ocean)
+- It is the last surviving giant tortoise species from the Indian Ocean region
+- The population is estimated at around 100,000 individuals
+- It is listed under CITES (protected species)
+
+========================
+BODY & CHARACTERISTICS
+========================
+- Very large, heavy body with a dome-shaped shell
+- Strong, column-like legs adapted for walking on land
+- Long neck used to reach vegetation
+- Males are usually larger than females
+- Body size and shape can vary between subpopulations
+
+- Tortoises grow slowly and show high variation in size depending on environmental conditions
+- Sexual dimorphism (size differences between males and females) varies between populations
+
+========================
+LIFESPAN & LIFE HISTORY
+========================
+- Among the longest-living land animals
+- Many individuals live over 100 years
+- Growth is slow and influenced by environmental conditions
+- Individuals can remain reproductively active for many decades
+
+========================
+DIET & FEEDING
+========================
+- Herbivorous (plant-eating)
+- Feeds mainly on grasses, herbs, and leaves
+- Especially important is "tortoise turf", a grassland vegetation type
+- Feeding behaviour can shape vegetation structure
+
+========================
+ECOLOGICAL ROLE
+========================
+- Considered an ecosystem engineer
+- Plays a key role in island ecosystems
+
+Important functions:
+- Seed dispersal across large distances
+- Trampling vegetation and shaping plant communities
+- Nutrient cycling through digestion
+- Maintaining open habitats
+
+- Their ecological role is often compared to large herbivores like elephants on continents
+
+========================
+HABITAT & ENVIRONMENT
+========================
+- Native habitat: Aldabra Atoll (Seychelles)
+- Tropical, seasonally dry environment
+- Habitats include:
+  - grasslands ("tortoise turf")
+  - scrub vegetation
+  - coastal areas
+
+- Grassland habitats are especially important but limited in area
+- Tortoises depend on:
+  - food availability
+  - shade (trees, shrubs)
+  - water or moist areas
+
+- Seasonal changes strongly influence movement and behaviour
+
+========================
+MOVEMENT & BEHAVIOUR
+========================
+- Generally slow-moving animals
+- Movement patterns depend on:
+  - food availability
+  - season (wet vs dry)
+  - temperature
+
+- Can show seasonal movements across the landscape
+- Use shade, mud wallows, or vegetation as thermal refuges
+
+========================
+POPULATION & VARIATION
+========================
+- Population on Aldabra is large and currently stable
+- Subpopulations exist on different islands within the atoll
+- These subpopulations differ in:
+  - body size
+  - density
+  - degree of sexual dimorphism
+
+- Differences are likely caused by environmental variation (e.g. vegetation, habitat)
+
+- Morphological variation does NOT necessarily indicate different species
+
+========================
+CONSERVATION & IMPORTANCE
+========================
+- One of the last remaining giant tortoise species worldwide
+- Many related species on other islands went extinct
+
+- Important for:
+  - conservation biology
+  - rewilding projects
+  - restoring ecological functions on islands
+
+- Aldabra is a UNESCO World Heritage Site
+
+========================
+SCIENTIFIC UNCERTAINTY
+========================
+- Some ecological interactions are not fully known
+- Effects of climate change (e.g. reduced rainfall) may impact habitat and population
+- Not all variation between populations is fully understood
+
+========================
+IMPORTANT RULES FOR ANSWERS
+========================
+- Combine general species knowledge with the specific individual when relevant
+- If the user refers to "this animal", prioritize the specimen-specific information
+- If the user asks general questions, answer at species level
+
+- Do not invent specific ecological interactions
+- Do not overstate certainty
+- Keep answers short, natural, and conversational
+`,
+
+allosaurus: `
+========================
+VISIBLE EXHIBIT: ALLOSAURUS ("BIG AL TWO")
+========================
+The exhibit shows a specific individual of Allosaurus known as “Big Al Two”.
+
+- This is one of the most complete Allosaurus skeletons ever found (~98% complete).
+- It was discovered in 1996 in Wyoming (USA).
+- The skeleton is about 7.6 metres long.
+
+Important:
+- The skeleton on display is largely original fossil material.
+- The skull is a replica because the original skull is extremely heavy and fragile.
+
+This exhibit represents not just a species, but a real individual with a life history.
+
+========================
+BASIC KNOWLEDGE
+========================
+- Allosaurus lived about 155–145 million years ago (Late Jurassic).
+- It was a large carnivorous dinosaur (theropod).
+- Typical length: around 8–12 metres.
+- It lived in North America and parts of Europe.
+
+========================
+BODY & APPEARANCE
+========================
+- Walked on two legs (bipedal).
+- Long tail for balance.
+- Strong hind legs → relatively fast movement.
+- Short but powerful arms with three claws.
+- Large head with sharp, serrated teeth.
+
+- The skull was relatively light due to openings in the bone.
+- It had small horn-like structures above the eyes.
+
+- The jaws could open very wide.
+
+========================
+DIET & FEEDING
+========================
+- Allosaurus was carnivorous.
+
+It likely:
+- hunted live prey
+- and also scavenged when possible
+
+Evidence:
+- bite marks on other dinosaur bones
+- injuries consistent with hunting
+
+- It may have used its head and neck to tear flesh rather than only biting with force.
+
+========================
+LIFE HISTORY OF THIS INDIVIDUAL
+========================
+This individual (“Big Al Two”) shows clear evidence of a difficult life.
+
+- Broken left shoulder blade
+- At least five broken ribs
+- Fractures in tail vertebrae
+
+Important:
+- All these injuries healed → the animal survived them
+- Some bones remained deformed
+
+Interpretation:
+- injuries may have resulted from:
+  - a fall
+  - or a fight with another large animal (e.g. Stegosaurus or sauropods)
+
+- This suggests a physically demanding and risky lifestyle
+
+Such healed injuries are common in large theropods and support the idea of active predation.
+
+========================
+LAST MEAL (INTERPRETATION)
+========================
+Remains found in the abdominal area include:
+- a lungfish tooth
+- bones of a small herbivorous dinosaur
+- a gastrolith (stone likely swallowed with prey)
+
+These may represent the animal’s last meal.
+
+Important:
+- this interpretation is plausible but not fully certain
+
+========================
+BEHAVIOR & ECOLOGY
+========================
+- One of the top predators of its ecosystem
+- Lived in the Morrison Formation
+
+Possible behavior:
+- active hunter
+- scavenger
+- likely both
+
+Group behavior:
+- debated, not proven
+
+========================
+GROWTH & LIFE HISTORY (SPECIES)
+========================
+- Rapid growth during adolescence
+- Sexual maturity likely around ~10 years
+- Continued growing after maturity
+- Lifespan probably around 20–30 years
+
+========================
+SCIENTIFIC IMPORTANCE
+========================
+This specimen is important because:
+- it is extremely complete
+- it shows multiple healed injuries
+- it provides insight into:
+  - behavior
+  - survival
+  - life history
+
+Allosaurus is also one of the best-studied large theropods.
+
+========================
+IMPORTANT RULES
+========================
+- Treat this as an individual animal, not just a species.
+- Do not present injury causes as certain.
+- Do not claim group hunting as proven.
+- Indicate uncertainty where needed.
+- Keep answers clear and natural.
 `
   };
 

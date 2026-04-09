@@ -165,7 +165,6 @@
       <img id="heroImage" src="" alt="">
      <div class="hero-content">
   <h1 class="title" id="title">Guide</h1>
-
   <div class="description" id="description">
   </div>
     </div>
@@ -248,14 +247,6 @@ if (lang === "de") {
   statusText.textContent = "Ready.";
   document.querySelector(".status-label").textContent = "Status";
   document.querySelector(".topbar-title").textContent = "Audio Guide";
-}
-
-const introText = document.getElementById("introText");
-
-if (lang === "de") {
-  introText.textContent = "Hallo, ich bin dein Audioguide. Du kannst mir Fragen zu diesem Objekt stellen. Wenn du eine Pause machen willst, drücke auf Stopp und starte mich danach wieder.";
-} else {
-  introText.textContent = "Hello, I’m your audio guide. You can ask me questions about this object. If you want to take a break, press stop and start me again afterwards.";
 }
 
 stopButton.disabled = true;

@@ -191,6 +191,26 @@
     return "Hello, I’m your audio guide. You can ask me anything about this object. If you want to take a break, you can stop me anytime and start again later.";
   }
 }
+
+function sendIntroWhenReady(dc, lang) {
+  const intro = getIntroMessage(lang);
+
+  const sendIntro = () => {
+    dc.send(JSON.stringify({
+      type: "response.create",
+      response: {
+        modalities: ["audio"],
+        instructions: intro
+      }
+    }));
+  };
+
+  if (dc.readyState === "open") {
+    sendIntro();
+  } else {
+    dc.onopen = sendIntro;
+  }
+}
   
   let lastUserTranscript = "";
 let lastAssistantTranscript = "";
@@ -434,16 +454,7 @@ statusText.textContent = lang === "de"
   ? "Verbunden."
   : "Connected.";
   
-  // Intro Message senden
-const intro = getIntroMessage(lang);
-
-dc.send(JSON.stringify({
-  type: "response.create",
-  response: {
-    modalities: ["audio"],
-    instructions: intro
-  }
-}));
+sendIntroWhenReady(dc, lang);
 
       } catch (error) {
   console.error(error);

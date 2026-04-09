@@ -104,6 +104,24 @@
       cursor: pointer;
       box-shadow: 0 8px 30px rgba(200,154,75,0.16);
     }
+    
+    .stop-btn {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #3a3a3a;
+  border-radius: 999px;
+  background: #1f1f1f;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.stop-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
     .status-card {
       margin-top: 16px;
@@ -154,9 +172,10 @@
 </div>
     </div>
 
-    <div class="controls">
-      <button class="start-btn" id="start">🎤 Start guide</button>
-    </div>
+<div class="controls">
+  <button class="start-btn" id="start">🎤 Start guide</button>
+  <button class="stop-btn" id="stop">⏸ Stop</button>
+</div>
 
     <div class="status-card">
       <div class="status-label">Status</div>
@@ -165,10 +184,18 @@
   </div>
 
   <script>
-  let lastUserMessage = "";
+  function getIntroMessage(lang) {
+  if (lang === "de") {
+    return "Hallo, ich bin dein Audioguide. Du kannst mich alles fragen zu diesem Objekt. Wenn du eine Pause machen willst, kannst du mich jederzeit stoppen und später wieder starten.";
+  } else {
+    return "Hello, I’m your audio guide. You can ask me anything about this object. If you want to take a break, you can stop me anytime and start again later.";
+  }
+}
+  
   let lastUserTranscript = "";
 let lastAssistantTranscript = "";
 let dc;
+let mediaStream;
     const params = new URLSearchParams(window.location.search);
 
     const exhibit = params.get("exhibit") || "plateosaurus";
@@ -222,23 +249,59 @@ const exhibitConfig = {
     document.getElementById("description").textContent =
       config.description[lang] || config.description.de;
 
-    const startButton = document.getElementById("start");
-    const statusText = document.getElementById("status");
+const startButton = document.getElementById("start");
+const stopButton = document.getElementById("stop");
+const statusText = document.getElementById("status");
 
 if (lang === "de") {
-  startButton.textContent = "🎤 Stell eine Frage";
+  startButton.textContent = "🎤 Start";
+  stopButton.textContent = "⏸ Stopp";
   statusText.textContent = "Bereit.";
   document.querySelector(".status-label").textContent = "Status";
   document.querySelector(".topbar-title").textContent = "Audio Guide";
 } else {
-  startButton.textContent = "🎤 Ask a question";
+  startButton.textContent = "🎤 Start";
+  stopButton.textContent = "⏸ Stop";
   statusText.textContent = "Ready.";
   document.querySelector(".status-label").textContent = "Status";
   document.querySelector(".topbar-title").textContent = "Audio Guide";
 }
+stopButton.disabled = true;
 
     let pc;
     let audioElement;
+
+function stopGuide() {
+  if (pc) {
+    pc.close();
+    pc = null;
+  }
+
+  if (audioElement) {
+    audioElement.pause();
+    audioElement.srcObject = null;
+    audioElement.remove();
+    audioElement = null;
+  }
+  
+  if (mediaStream) {
+  mediaStream.getTracks().forEach(track => track.stop());
+  mediaStream = null;
+}
+
+  document.querySelectorAll(".status-card audio").forEach(el => el.remove());
+
+  startButton.disabled = false;
+  startButton.style.opacity = "1";
+  stopButton.disabled = true;
+
+  statusText.textContent = lang === "de"
+    ? "Gestoppt. Du kannst den Guide wieder starten."
+    : "Stopped. You can start the guide again.";
+}
+stopButton.addEventListener("click", () => {
+  stopGuide();
+});
 
     startButton.addEventListener("click", async () => {
       try {
@@ -246,18 +309,13 @@ if (lang === "de") {
 lastAssistantTranscript = "";
       startButton.disabled = true;
 startButton.style.opacity = "0.7";
-         if (pc) {
-      pc.close();
-      pc = null;
-    }
-
-    document.querySelectorAll(".status-card audio").forEach(el => el.remove());
-
-    if (audioElement) {
-      audioElement.pause();
-      audioElement.srcObject = null;
-      audioElement = null;
-    }
+stopButton.disabled = false;
+        if (pc || audioElement) {
+  stopGuide();
+  stopButton.disabled = false;
+  startButton.disabled = true;
+  startButton.style.opacity = "0.7";
+}
         statusText.textContent = lang === "de"
           ? "Session wird erstellt..."
           : "Creating session...";
@@ -270,10 +328,13 @@ startButton.style.opacity = "0.7";
         console.log("SESSION DATA:", data);
 
         if (!data.client_secret) {
-          statusText.textContent =
-            "Server response: " + JSON.stringify(data);
-          return;
-        }
+  statusText.textContent =
+    "Server response: " + JSON.stringify(data);
+  startButton.disabled = false;
+  startButton.style.opacity = "1";
+  stopButton.disabled = true;
+  return;
+}
 
         const EPHEMERAL_KEY = data.client_secret.value;
 
@@ -281,7 +342,7 @@ startButton.style.opacity = "0.7";
           ? "Mikrofon wird aktiviert..."
           : "Activating microphone...";
 
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
         pc = new RTCPeerConnection();
         dc = pc.createDataChannel("oai-events");
@@ -333,17 +394,15 @@ if (msg.type === "response.audio_transcript.done") {
 
 
 audioElement.onended = () => {
-  startButton.disabled = false;
-  startButton.style.opacity = "1";
   statusText.textContent = lang === "de"
-    ? "Bereit."
-    : "Ready.";
-  };
+    ? "Bereit. Du kannst weiterfragen oder stoppen."
+    : "Ready. You can keep asking or stop.";
+};
 };
 
-        stream.getTracks().forEach(track => {
-          pc.addTrack(track, stream);
-        });
+        mediaStream.getTracks().forEach(track => {
+  pc.addTrack(track, mediaStream);
+});
 
         const offer = await pc.createOffer();
         await pc.setLocalDescription(offer);
@@ -374,13 +433,23 @@ audioElement.onended = () => {
 statusText.textContent = lang === "de"
   ? "Verbunden."
   : "Connected.";
+  
+  // Intro Message senden
+const intro = getIntroMessage(lang);
+
+dc.send(JSON.stringify({
+  type: "response.create",
+  response: {
+    modalities: ["audio"],
+    instructions: intro
+  }
+}));
 
       } catch (error) {
-        console.error(error);
-        statusText.textContent = "Error: " + error.message;
-        startButton.disabled = false;
-startButton.style.opacity = "1";
-      }
+  console.error(error);
+  stopGuide();
+  statusText.textContent = "Error: " + error.message;
+}
     });
   </script>
 </body>

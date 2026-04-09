@@ -150,17 +150,6 @@
       width: 100%;
       margin-top: 14px;
     }
-    
-    .intro-box {
-  margin-top: 14px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: #171717;
-  border: 1px solid #2f2f2f;
-  color: #cfcfcf;
-  line-height: 1.45;
-  font-size: 0.95rem;
-}
 
   </style>
 </head>
@@ -178,9 +167,7 @@
   <h1 class="title" id="title">Guide</h1>
 
   <div class="description" id="description">
-    Explore this exhibit through a spoken conversation.
   </div>
-</div>
     </div>
 
 <div class="controls">
@@ -192,10 +179,6 @@
       <div class="status-label">Status</div>
       <div id="status">Ready.</div>
     </div>
-    
-<div class="intro-box" id="introText">
-  Hallo, ich bin dein Audioguide. Du kannst mir Fragen zu diesem Objekt stellen. Wenn du eine Pause machen willst, drücke auf Stopp und starte mich danach wieder.
-</div>
   </div>
 
   <script>
@@ -215,37 +198,21 @@ const exhibitConfig = {
     title: "Plateosaurus",
     image: "plateosaurus.png",
     imageClass: "plateosaurus-image",
-    description: {
-      de: "Stell eine Frage und entdecke den Plateosaurus im Gespräch.",
-      en: "Ask a question and explore the Plateosaurus through conversation."
-    }
   },
   ichthyosaurus: {
     title: "Ichthyosaurus",
     image: "ichthyosaurus.png",
     imageClass: "",
-    description: {
-      de: "Stell eine Frage und entdecke dieses Meerestier im Gespräch.",
-      en: "Ask a question and explore this marine reptile through conversation."
-    }
   },
   aldabra: {
     title: "Aldabra-Riesenschildkröte",
     image: "aldabra.png",
     imageClass: "",
-    description: {
-      de: "Stell eine Frage und entdecke die Riesenschildkröte im Gespräch.",
-      en: "Ask a question and explore the giant tortoise through conversation."
-    }
   },
     allosaurus: {
     title: "Allosaurus",
     image: "allosaurus.png",
     imageClass: "",
-    description: {
-      de: "Stell eine Frage und entdecke den Allosaurus im Gespräch.",
-      en: "Ask a question and explore the Allosaurus through conversation."
-    }
   }
 };
     const config = exhibitConfig[exhibit] || exhibitConfig.plateosaurus;
@@ -254,8 +221,16 @@ const exhibitConfig = {
     document.getElementById("heroImage").src = config.image;
     document.getElementById("heroImage").className = config.imageClass || "";
     document.getElementById("heroImage").alt = config.title;
-    document.getElementById("description").textContent =
-      config.description[lang] || config.description.de;
+    
+function getIntroText(lang) {
+  if (lang === "de") {
+    return "Hallo, ich bin dein Audioguide. Du kannst mir alles zu diesem Objekt fragen. Wenn du eine Pause machen willst, drücke einfach auf Stopp und starte mich danach wieder.";
+  } else {
+    return "Hello, I’m your audio guide. You can ask me anything about this object. If you want to take a break, press stop and start me again afterwards.";
+  }
+}
+
+document.getElementById("description").textContent = getIntroText(lang);
 
 const startButton = document.getElementById("start");
 const stopButton = document.getElementById("stop");

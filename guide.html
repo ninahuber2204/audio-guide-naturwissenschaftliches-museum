@@ -79,7 +79,6 @@
   text-align: left;
 }
 
-
 .description {
   color: #b6b6b6;
   line-height: 1.5;
@@ -151,6 +150,18 @@
       width: 100%;
       margin-top: 14px;
     }
+    
+    .intro-box {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #171717;
+  border: 1px solid #2f2f2f;
+  color: #cfcfcf;
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
   </style>
 </head>
 
@@ -181,36 +192,13 @@
       <div class="status-label">Status</div>
       <div id="status">Ready.</div>
     </div>
+    
+<div class="intro-box" id="introText">
+  Hallo, ich bin dein Audioguide. Du kannst mir Fragen zu diesem Objekt stellen. Wenn du eine Pause machen willst, drücke auf Stopp und starte mich danach wieder.
+</div>
   </div>
 
   <script>
-  function getIntroMessage(lang) {
-  if (lang === "de") {
-    return "Hallo, ich bin dein Audioguide. Du kannst mich alles fragen zu diesem Objekt. Wenn du eine Pause machen willst, kannst du mich jederzeit stoppen und später wieder starten.";
-  } else {
-    return "Hello, I’m your audio guide. You can ask me anything about this object. If you want to take a break, you can stop me anytime and start again later.";
-  }
-}
-
-function sendIntroWhenReady(dc, lang) {
-  const intro = getIntroMessage(lang);
-
-  const sendIntro = () => {
-    dc.send(JSON.stringify({
-      type: "response.create",
-      response: {
-        modalities: ["audio"],
-        instructions: intro
-      }
-    }));
-  };
-
-  if (dc.readyState === "open") {
-    sendIntro();
-  } else {
-    dc.onopen = sendIntro;
-  }
-}
   
   let lastUserTranscript = "";
 let lastAssistantTranscript = "";
@@ -286,6 +274,15 @@ if (lang === "de") {
   document.querySelector(".status-label").textContent = "Status";
   document.querySelector(".topbar-title").textContent = "Audio Guide";
 }
+
+const introText = document.getElementById("introText");
+
+if (lang === "de") {
+  introText.textContent = "Hallo, ich bin dein Audioguide. Du kannst mir Fragen zu diesem Objekt stellen. Wenn du eine Pause machen willst, drücke auf Stopp und starte mich danach wieder.";
+} else {
+  introText.textContent = "Hello, I’m your audio guide. You can ask me questions about this object. If you want to take a break, press stop and start me again afterwards.";
+}
+
 stopButton.disabled = true;
 
     let pc;
@@ -454,8 +451,6 @@ statusText.textContent = lang === "de"
   ? "Verbunden."
   : "Connected.";
   
-sendIntroWhenReady(dc, lang);
-
       } catch (error) {
   console.error(error);
   stopGuide();

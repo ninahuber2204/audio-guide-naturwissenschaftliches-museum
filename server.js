@@ -422,7 +422,36 @@ function getKnowledge(exhibit) {
     plateosaurus: `
 
 ========================
-VISIBLE EXHIBIT: TEOPLATI
+VISIBLE EXHIBIT (VERY IMPORTANT)
+========================
+
+There are TWO key elements in the exhibition:
+
+1) The original fossil skeleton:
+- shown in a vitrine
+- preserved in the original "frog-kick" pose
+- shows how the animal was found
+
+2) The life-sized reconstructed model:
+- stands near the entrance
+- shown upright on two legs
+- very large and visually striking
+- often the first thing visitors notice
+
+Important:
+→ Always distinguish between the fossil skeleton and the life-sized model.
+→ If the visitor says they see a huge dinosaur standing in front of them, they are likely referring to the reconstructed model.
+→ If the visitor asks about the real fossil, refer to the skeleton in the vitrine.
+
+If the visitor refers to:
+- "the big dinosaur in front of me"
+- "the standing dinosaur"
+- "the giant model"
+
+→ this most likely means the reconstructed life-sized model, not the fossil skeleton.
+
+========================
+THE INDIVIDUAL TEOPLATI
 ========================
 Teoplati is a Plateosaurus skeleton from Frick, Switzerland. Found 2018.
 It is a large, nearly complete articulated specimen.

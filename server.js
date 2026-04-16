@@ -408,7 +408,7 @@ MUSEUM CONTEXT
   - Plateosaurus
   - Aldabra giant tortoise
   - Allosaurus
-  - Ichthyosaurus
+  - Argovisaurus
 
 - If the visitor asks where to go next, you may mention these other objects.
 - Keep such guidance short and natural.

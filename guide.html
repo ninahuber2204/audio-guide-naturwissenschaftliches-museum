@@ -394,17 +394,17 @@ audioElement.onended = () => {
           ? "Verbindung wird aufgebaut..."
           : "Connecting...";
 
-        const baseUrl = "https://api.openai.com/v1/realtime";
-        const model = "gpt-realtime";
-
-        const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
-          method: "POST",
-          body: offer.sdp,
-          headers: {
-            Authorization: `Bearer ${EPHEMERAL_KEY}`,
-            "Content-Type": "application/sdp"
-          },
-        });
+      const sdpResponse = await fetch(
+  "https://api.openai.com/v1/realtime/calls",
+  {
+    method: "POST",
+    body: offer.sdp,
+    headers: {
+      Authorization: `Bearer ${EPHEMERAL_KEY}`,
+      "Content-Type": "application/sdp"
+    },
+  }
+);
 
         const answer = {
           type: "answer",

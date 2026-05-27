@@ -1268,62 +1268,52 @@ IMPORTANT RULES
 }
 
 app.get("/session", async (req, res) => {
+
   const exhibit = req.query.exhibit || "plateosaurus";
   const mode = req.query.mode || "adult";
   const lang = req.query.lang || "de";
 
   try {
-    const commonInstructions = getCommonInstructions();
-const exhibitKnowledge = getKnowledge(exhibit);
-
-const instructions = `
-${commonInstructions}
-
-${exhibitKnowledge}
+    const instructions = `
+${getCommonInstructions()}
+${getKnowledge(exhibit)}
 
 Current settings:
 - exhibit: ${exhibit}
 - mode: ${mode}
 - lang: ${lang}
-
 Follow these settings exactly.
 `;
 
-    const response = await fetch("https://api.openai.com/v1/realtime/sessions", {
+    const response = await fetch("https://api.openai.com/v1/realtime/client_secrets", {
       method: "POST",
+
       headers: {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
-body: JSON.stringify({
-  model: "gpt-realtime",
-  voice: "alloy",
-  instructions,
-  input_audio_transcription: {
-    model: "gpt-4o-mini-transcribe"
-  },
-  input_audio_noise_reduction: {
-    type: "near_field"
-  },
-  turn_detection: {
-    type: "server_vad",
-    threshold: 0.96,
-    silence_duration_ms: 1400,
-    create_response: true,
-    interrupt_response: false
-  }
-}),
+      
+      body: JSON.stringify({
+        session: {
+          type: "realtime",
+          model: "gpt-realtime-2",
+          instructions,
+          audio: {
+            output: {
+              voice: "marin"
+            }
+          }
+        }
+      }),
     });
 
     const data = await response.json();
+    console.log("OpenAI response:", JSON.stringify(data, null, 2));
 
-console.log("OpenAI response:", JSON.stringify(data, null, 2));
-
-if (!response.ok) {
-  return res.status(response.status).json(data);
-}
-
-res.json(data);
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
+    res.json(data);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error creating session");

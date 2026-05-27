@@ -1267,8 +1267,7 @@ IMPORTANT RULES
   return knowledge[exhibit] || knowledge.plateosaurus;
 }
 
-app.get("/session", async (req, res) => {
-
+app.post("/session", express.text({ type: "application/sdp" }), async (req, res) => {
   const exhibit = req.query.exhibit || "plateosaurus";
   const mode = req.query.mode || "adult";
   const lang = req.query.lang || "de";
@@ -1276,47 +1275,52 @@ app.get("/session", async (req, res) => {
   try {
     const instructions = `
 ${getCommonInstructions()}
+
 ${getKnowledge(exhibit)}
 
 Current settings:
 - exhibit: ${exhibit}
 - mode: ${mode}
 - lang: ${lang}
+
 Follow these settings exactly.
 `;
 
-    const response = await fetch("https://api.openai.com/v1/realtime/client_secrets", {
-      method: "POST",
-
-      headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      
-      body: JSON.stringify({
-        session: {
-          type: "realtime",
-          model: "gpt-realtime-2",
-          instructions,
-          audio: {
-            output: {
-              voice: "marin"
-            }
-          }
+    const sessionConfig = JSON.stringify({
+      type: "realtime",
+      model: "gpt-realtime",
+      instructions,
+      audio: {
+        output: {
+          voice: "marin"
         }
-      }),
+      }
     });
 
-    const data = await response.json();
-    console.log("OpenAI response:", JSON.stringify(data, null, 2));
+    const fd = new FormData();
+    fd.set("sdp", req.body);
+    fd.set("session", sessionConfig);
+
+    const response = await fetch("https://api.openai.com/v1/realtime/calls", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`
+      },
+      body: fd
+    });
+
+    const sdp = await response.text();
 
     if (!response.ok) {
-      return res.status(response.status).json(data);
+      console.error("OpenAI error:", sdp);
+      return res.status(response.status).send(sdp);
     }
-    res.json(data);
+
+    res.type("application/sdp").send(sdp);
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error creating session");
+    res.status(500).send("Error creating realtime call");
   }
 });
 

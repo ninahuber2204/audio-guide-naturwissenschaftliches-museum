@@ -303,24 +303,6 @@ stopButton.disabled = false;
           ? "Session wird erstellt..."
           : "Creating session...";
 
-        const tokenResponse = await fetch(
-  `https://audio-guide-api-dds9.onrender.com/session?exhibit=${exhibit}&mode=${mode}&lang=${lang}`
-);
-
-        const data = await tokenResponse.json();
-        console.log("SESSION DATA:", data);
-
-        if (!data.client_secret) {
-  statusText.textContent =
-    "Server response: " + JSON.stringify(data);
-  startButton.disabled = false;
-  startButton.style.opacity = "1";
-  stopButton.disabled = true;
-  return;
-}
-
-        const EPHEMERAL_KEY = data.client_secret.value;
-
         statusText.textContent = lang === "de"
           ? "Mikrofon wird aktiviert..."
           : "Activating microphone...";
@@ -394,13 +376,12 @@ audioElement.onended = () => {
           ? "Verbindung wird aufgebaut..."
           : "Connecting...";
 
-      const sdpResponse = await fetch(
-  "https://api.openai.com/v1/realtime/calls",
+const sdpResponse = await fetch(
+  `https://audio-guide-api-dds9.onrender.com/session?exhibit=${exhibit}&mode=${mode}&lang=${lang}`,
   {
     method: "POST",
     body: offer.sdp,
     headers: {
-      Authorization: `Bearer ${EPHEMERAL_KEY}`,
       "Content-Type": "application/sdp"
     },
   }

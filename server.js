@@ -1292,7 +1292,7 @@ Follow these settings exactly.
       instructions,
       audio: {
         output: {
-          voice: "marin"
+          voice: "alloy"
         }
       }
     });
